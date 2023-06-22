@@ -1,0 +1,37 @@
+Query 1
+    SELECT Genre.name, COUNT(Track.trackid) AS Tracks_Sold
+    FROM Genre
+    JOIN Track
+    ON Genre.genreid = track.genreid
+    JOIN InvoiceLine
+    ON InvoiceLine.trackid = track.trackid
+    GROUP BY Genre.name
+    ORDER BY Tracks_Sold DESC;
+
+Query 2
+    SELECT Country, COUNT(Country) as Invoices, SUM(Invoice.Total) as Total
+    FROM Invoice
+    JOIN Customer ON Invoice.CustomerId = Customer.CustomerId
+    Group by Country
+    ORDER BY Total DESC
+    LIMIT 10;
+
+Query 3
+    SELECT Album.Title, sum(Track.UnitPrice) as Total_Price
+    FROM Album
+    JOIN Track on Track.AlbumID = Album.AlbumID
+    GROUP BY Album.Title
+    ORDER BY Total_Price DESC;
+
+Query 4
+    SELECT Album.albumid, Album.title, Artist.name AS Artist_Name, SUM(InvoiceLine.unitprice * InvoiceLine.quantity) AS Sales
+    FROM Artist
+    JOIN Album
+    ON Artist.artistid = Album.artistid
+    JOIN Track
+    ON Album.albumid = Track.albumid
+    JOIN InvoiceLine
+    ON InvoiceLine.trackid = Track.trackid
+    GROUP BY Album.albumid
+    ORDER BY Sales DESC
+    LIMIT 10;
